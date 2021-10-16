@@ -44,3 +44,5 @@
 *.tlog
 Debug/Chess.vcxproj.FileListAbsolute.txt
 Debug/vc142.idb
+x64/Debug/vc142.idb
+x64/Debug/Chess.vcxproj.FileListAbsolute.txt
