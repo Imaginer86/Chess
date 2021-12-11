@@ -1,25 +1,31 @@
-#pragma once
+﻿#pragma once
+#include <cassert>
 #include <map>
 
 class Chessman {
-	enum class Man{
+	/*static enum class Man {
 		K = 1,
 		Q = 2,
 		R = 3,
 		B = 4,
 		N = 5,
 		P = 6		
-	};
+	};*/
 
 	//bool isWhite;
 	//Man man;
-	Chessman();
+	//Chessman();
 public:
 	//Chessman(Man man_, bool isWhite_):isWhite(isWhite_),man(man_) {}
 	static bool IsWhite(int N) {
 		if (N >= 1 && N <= 6) return true;
 		else if (N >= 7 && N <= 12) return false;
-		//else ASSERT;
+		else {assert(true); return false;}
+	}
+	static bool IsBlack(int N) {
+		if (N >= 7 && N <= 12) return true;
+		else if (N >= 1 && N <= 6) return false;
+		else {assert(true); return false;}
 	}
 	static char GetMan(int N)
 	{
@@ -47,7 +53,8 @@ public:
 		case 12:
 			return 'P';
 		default:
-			//ASSERT
+			assert(true);
+			return 'T';
 			break;
 		}
 		/*
@@ -105,14 +112,113 @@ public:
 	*/
 };
 
+
+
 class Board
 {
-	int mBoard[8][8];
-	std::map<char,wchar_t> White;
-	std::map<char,wchar_t> Black;
 public:
-	Board();
-	wchar_t GetSymbol(int s, int d);
-	void Start();
-};
+	static int mBoard[8][8];
+	static std::map<char, wchar_t> White;
+	static std::map<char, wchar_t> Black;
+	//Board();
+	//wchar_t GetSymbol(int s, int d);
+	//void Start();
 
+	static wchar_t GetSymbol(int s, int d)
+	{
+		int n = mBoard[s][d];
+		if (n == 0) return L't';
+		if (Chessman::IsWhite(n)) return White[Chessman::GetMan(n)];
+		else if (Chessman::IsBlack(n)) return Black[Chessman::GetMan(n)];
+		else { assert(true); return L'T'; }
+	}
+
+	static void Start()
+	{
+		White['K'] = L'♔';
+		White['Q'] = L'♕';
+		White['R'] = L'♗';
+		White['B'] = L'♘';
+		White['N'] = L'♖';
+		White['P'] = L'♙';
+
+		Black['K'] = L'♚';
+		Black['Q'] = L'♛';
+		Black['R'] = L'♝';
+		Black['B'] = L'♞';
+		Black['N'] = L'♜';
+		Black['P'] = L'♙';
+
+		mBoard[0][0] = 3;
+		mBoard[0][1] = 5;
+		mBoard[0][2] = 4;
+		mBoard[0][3] = 2;
+		mBoard[0][4] = 1;
+		mBoard[0][5] = 4;
+		mBoard[0][6] = 5;
+		mBoard[0][7] = 3;
+
+		mBoard[1][0] = 6;
+		mBoard[1][1] = 6;
+		mBoard[1][2] = 6;
+		mBoard[1][3] = 6;
+		mBoard[1][4] = 6;
+		mBoard[1][5] = 6;
+		mBoard[1][6] = 6;
+		mBoard[1][7] = 6;
+
+		mBoard[2][0] = 0;
+		mBoard[2][1] = 0;
+		mBoard[2][2] = 0;
+		mBoard[2][3] = 0;
+		mBoard[2][4] = 0;
+		mBoard[2][5] = 0;
+		mBoard[2][6] = 0;
+		mBoard[2][7] = 0;
+
+		mBoard[3][0] = 0;
+		mBoard[3][1] = 0;
+		mBoard[3][2] = 0;
+		mBoard[3][3] = 0;
+		mBoard[3][4] = 0;
+		mBoard[3][5] = 0;
+		mBoard[3][6] = 0;
+		mBoard[3][7] = 0;
+
+		mBoard[4][0] = 0;
+		mBoard[4][1] = 0;
+		mBoard[4][2] = 0;
+		mBoard[4][3] = 0;
+		mBoard[4][4] = 0;
+		mBoard[4][5] = 0;
+		mBoard[4][6] = 0;
+		mBoard[4][7] = 0;
+
+		mBoard[5][0] = 0;
+		mBoard[5][1] = 0;
+		mBoard[5][2] = 0;
+		mBoard[5][3] = 0;
+		mBoard[5][4] = 0;
+		mBoard[5][5] = 0;
+		mBoard[5][6] = 0;
+		mBoard[5][7] = 0;
+
+		mBoard[6][0] = 12;
+		mBoard[6][1] = 12;
+		mBoard[6][2] = 12;
+		mBoard[6][3] = 12;
+		mBoard[6][4] = 12;
+		mBoard[6][5] = 12;
+		mBoard[6][6] = 12;
+		mBoard[6][7] = 12;
+
+		mBoard[7][0] = 9;
+		mBoard[7][1] = 11;
+		mBoard[7][2] = 10;
+		mBoard[7][3] = 8;
+		mBoard[7][4] = 7;
+		mBoard[7][5] = 10;
+		mBoard[7][6] = 11;
+		mBoard[7][7] = 9;
+	}
+};
