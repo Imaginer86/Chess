@@ -1,6 +1,9 @@
 ﻿#pragma once
+#include <iostream>
 #include <cassert>
 #include <map>
+
+using namespace std;
 
 class Chessman {
 	/*static enum class Man {
@@ -117,14 +120,14 @@ public:
 class Board
 {
 public:
-	static int mBoard[8][8];
-	static std::map<char, wchar_t> White;
-	static std::map<char, wchar_t> Black;
+	int mBoard[8][8];
+	std::map<char, wchar_t> White;
+	std::map<char, wchar_t> Black;
 	//Board();
 	//wchar_t GetSymbol(int s, int d);
 	//void Start();
 
-	static wchar_t GetSymbol(int s, int d)
+	wchar_t GetSymbol(int s, int d)
 	{
 		int n = mBoard[s][d];
 		if (n == 0) return L't';
@@ -133,27 +136,35 @@ public:
 		else { assert(true); return L'T'; }
 	}
 
-	static void Start()
+	bool getColor(int s, int d)
+	{
+		int n = mBoard[s][d];
+		if (n == 0) { assert(true); return false; }
+		return Chessman::IsWhite(n);
+	}
+
+	void Init()
 	{
 		White['K'] = L'♔';
 		White['Q'] = L'♕';
-		White['R'] = L'♗';
-		White['B'] = L'♘';
-		White['N'] = L'♖';
+		White['B'] = L'♗';
+		White['N'] = L'♘';
+		White['R'] = L'♖';
 		White['P'] = L'♙';
 
 		Black['K'] = L'♚';
 		Black['Q'] = L'♛';
-		Black['R'] = L'♝';
-		Black['B'] = L'♞';
-		Black['N'] = L'♜';
+		Black['B'] = L'♝';
+		Black['N'] = L'♞';
+		Black['R'] = L'♜';
 		Black['P'] = L'♙';
+		//Black['P'] = L'♟︎';
 
 		mBoard[0][0] = 3;
 		mBoard[0][1] = 5;
 		mBoard[0][2] = 4;
-		mBoard[0][3] = 2;
-		mBoard[0][4] = 1;
+		mBoard[0][3] = 1;
+		mBoard[0][4] = 2;
 		mBoard[0][5] = 4;
 		mBoard[0][6] = 5;
 		mBoard[0][7] = 3;
@@ -215,10 +226,45 @@ public:
 		mBoard[7][0] = 9;
 		mBoard[7][1] = 11;
 		mBoard[7][2] = 10;
-		mBoard[7][3] = 8;
-		mBoard[7][4] = 7;
+		mBoard[7][3] = 7;
+		mBoard[7][4] = 8;
 		mBoard[7][5] = 10;
 		mBoard[7][6] = 11;
 		mBoard[7][7] = 9;
+	}
+
+	void Print()
+	{
+
+		bool ciw = false;
+		int bc = 0;
+		for (int i = 7; i >= 0; --i)
+		{
+			wcout << "\x1b[37;40m" << i + 1;
+			//if (i == 6) continue;
+			for (int j = 0; j <= 7; ++j)
+			{
+				wchar_t c = GetSymbol(i, j);
+				ciw = bc % 2 == 0;
+				if (c == 't') c = L' ';
+				else if (getColor(i, j)) wcout << "\x1b[37m"; else wcout << "\x1b[30m";
+				if (ciw) wcout << "\x1b[43m" << c;
+				else  wcout << "\x1b[42m" << c;
+				wcout << L' ';
+				bc++;
+			}
+			wcout << "\x1b[40m";
+			bc++;
+			wcout << endl;
+		}
+		wcout << "\x1b[37;40m" << L' ';
+		for (wchar_t l = L'a'; l <= L'h'; ++l) wcout << l << ' ';
+		wcout << endl;
+	}
+
+	void Move(int brow, int bcol, int erow, int ecol)
+	{
+		mBoard[erow][ecol] = mBoard[brow][bcol];
+		mBoard[brow][bcol] = 0;
 	}
 };
