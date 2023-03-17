@@ -257,7 +257,7 @@ public:
 			bc++;
 			wcout << endl;
 		}
-		wcout << "\x1b[37;40m" << L' ';
+		wcout << "\x1b[37;40m" << L' ' << L' ';
 		for (wchar_t l = L'a'; l <= L'h'; ++l) wcout << l << ' ';
 		wcout << endl;
 	}
